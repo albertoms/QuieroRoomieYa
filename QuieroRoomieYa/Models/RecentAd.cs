@@ -2,7 +2,7 @@
 
 namespace QuieroRoomieYa
 {
-	public class RecentRoom
+	public class RecentAd
 	{
 		public string id { get; set;}
 		public string category { get; set;}

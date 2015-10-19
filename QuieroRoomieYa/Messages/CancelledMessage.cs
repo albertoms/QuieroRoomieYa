@@ -1,12 +1,7 @@
-﻿using System;
-
-namespace QuieroRoomieYa
+﻿namespace QuieroRoomieYa.Messages
 {
 	public class CancelledMessage
 	{
-		public CancelledMessage ()
-		{
-		}
 	}
 }
 

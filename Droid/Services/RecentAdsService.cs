@@ -9,7 +9,7 @@ using QuieroRoomieYa.Messages;
 namespace QuieroRoomieYa.Android
 {
 	[Service]
-	public class LongRunningTaskService : Service
+	public class RecentAdsService : Service
 	{
 		CancellationTokenSource _cts;
 
@@ -24,9 +24,8 @@ namespace QuieroRoomieYa.Android
 
 			Task.Run (() => {
 				try {
-					//INVOKE THE SHARED CODE
-					var counter = new TaskCounter();
-					counter.RunCounter(_cts.Token).Wait();
+					var recentAds = new RecentAdsWebService();
+					recentAds.GetRecentAdsService(_cts.Token).Wait();
 				}
 				catch (OperationCanceledException) {
 				}

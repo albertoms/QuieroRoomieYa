@@ -2,7 +2,7 @@
 
 namespace QuieroRoomieYa
 {
-	public class RoomAd
+	public class RoomOfferAd
 	{
 		public string id { get; set;}
 		public string name { get; set;}

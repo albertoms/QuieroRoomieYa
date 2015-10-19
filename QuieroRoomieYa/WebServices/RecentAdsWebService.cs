@@ -2,20 +2,31 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace QuieroRoomieYa
 {
-	public class RecentRoomsService
+	public class RecentAdsWebService
 	{
-
-		public RecentRoomsService ()
+		public async Task GetRecentAdsService(CancellationToken token)
 		{
+			await Task.Run (async () => {
+				for ( long i=0; i<long.MaxValue; i++ ) {
+					token.ThrowIfCancellationRequested ();
+					await Task.Delay(300000); //5 minutos
+					RoomOfferAd[] recentAds = await GetRecentAdsAsync();
+
+					Device.BeginInvokeOnMainThread(() => {
+						MessagingCenter.Send<RoomOfferAd[]>(recentAds, "RoomOffersAds");
+					});	
+				}
+			}, token);
 		}
 
-		public async Task<RoomOfferAd[]> getRecentRoomsAsync() {
+		public async Task<RoomOfferAd[]> GetRecentAdsAsync() {
 			var client = new System.Net.Http.HttpClient ();		
 			StringContent payload = new StringContent ("latitude=19.432608&longitude=-99.13320799999997&is_recent=true&rooms_type=room_ofrezco", Encoding.UTF8, "application/x-www-form-urlencoded");
 			var response = await client.PostAsync (new Uri("http://www.dadaroom.com/busqueda/display"), payload);
