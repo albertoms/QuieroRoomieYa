@@ -56,17 +56,21 @@ namespace QuieroRoomieYa
 			MessagingCenter.Subscribe<RoomOfferAd[]> (this, "RoomOffersAds", message => {
 				Device.BeginInvokeOnMainThread(() => {
 					if ( message.Length > recentAdsCounter ) {
-						Console.WriteLine("Rooomieee!");
-						recentAdsCounter = message.Length;
+						var newAds = (message.Length - recentAdsCounter);
+						var notifMessage = "";
+						if ( newAds == 1 ) {
+							notifMessage = "Llegó 1 nuevo anuncio de roomies.";
+						}
+						else {
+							notifMessage = string.Format("Llegaron {0} nuevos anuncios de roomies.", newAds);
+						}
 						var newNotification = new NotificationMessage() {
-							Title = "QuieroRoomieYa!",
-							Message = string.Format("Llegaron {0} nuevos anuncios de roomies", (message.Length - recentAdsCounter))
+							Title = "Quiero Roomie Ya!",
+							Message = notifMessage
 						};
 						MessagingCenter.Send<NotificationMessage>(newNotification, "NotificationMessage");
-					} else {
-						Console.WriteLine("No roomie :(");
+						recentAdsCounter = message.Length;
 					}
-//					SearchRoomsButton_Clicked (this, null);
 				});
 			});
 
